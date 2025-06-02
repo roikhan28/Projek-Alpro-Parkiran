@@ -113,9 +113,8 @@ void tampilkanMenu() {
     cout << "4. Urutkan Kendaraan berdasarkan Nomor Plat\n";
     cout << "5. Cari Kendaraan\n";
     cout << "6. Bersihkan Data Parkir\n";
-    cout << "7. Hitung Jumlah Kendaraan (Rekursif)\n";
+    cout << "7. Hitung Jumlah Kendaraan\n";
     cout << "8. Keluar Program\n";
-    cout << "Kendaraan terparkir saat ini: " << jumlahKendaraan << "/" << kapasitasMaksimal << "\n";
     cout << "Pilihan Anda: ";
 }
 
