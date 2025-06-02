@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <algorithm>
 #include <iomanip>
 
 using namespace std;
@@ -19,7 +18,7 @@ Vehicle* kendaraanParkir = nullptr;
 int jumlahKendaraan = 0;
 
 bool alokasiMemori(int kapasitasBaru) {
-    Vehicle* temp = new (nothrow) Vehicle[kapasitasBaru];
+    Vehicle* temp = new Vehicle[kapasitasBaru];
     if (temp == nullptr) {
         cout << "\nGagal mengalokasikan memori!\n";
         return false;
@@ -79,12 +78,14 @@ void loadFile() {
             kapasitasMaksimal = jumlahKendaraan;
         }
 
-        if (jumlahKendaraan > 0 && alokasiMemori(kapasitasMaksimal)) {
-            for (int i = 0; i < jumlahKendaraan; ++i) {
-                getline(file, kendaraanParkir[i].nomorPlat);
-                getline(file, kendaraanParkir[i].jenisKendaraan);
-                getline(file, kendaraanParkir[i].tanggalMasuk);
-                getline(file, kendaraanParkir[i].waktuMasuk);
+        if (jumlahKendaraan > 0) {
+            if (alokasiMemori(kapasitasMaksimal)) {
+                for (int i = 0; i < jumlahKendaraan; ++i) {
+                    getline(file, kendaraanParkir[i].nomorPlat);
+                    getline(file, kendaraanParkir[i].jenisKendaraan);
+                    getline(file, kendaraanParkir[i].tanggalMasuk);
+                    getline(file, kendaraanParkir[i].waktuMasuk);
+                }
             }
         }
     } else {
@@ -129,7 +130,7 @@ void kendaraanMasuk() {
 
     Vehicle kendaraanBaru;
     cout << "\nMasukkan Nomor Plat: ";
-    getline(cin >> ws, kendaraanBaru.nomorPlat);
+    getline(cin, kendaraanBaru.nomorPlat);
 
     if (cariKendaraan(kendaraanBaru.nomorPlat)) {
         cout << "\nKendaraan dengan nomor plat ini sudah terparkir!\n";
@@ -241,7 +242,7 @@ void urutkanBerdasarkanNomorPlat() {
 void cariKendaraan() {
     string nomorPlat;
     cout << "\nMasukkan Nomor Plat yang ingin dicari: ";
-    getline(cin >> ws, nomorPlat);
+    getline(cin, nomorPlat);
 
     for (int i = 0; i < jumlahKendaraan; ++i) {
         if (kendaraanParkir[i].nomorPlat == nomorPlat) {
@@ -276,14 +277,6 @@ int main() {
         tampilkanMenu();
         cin >> pilihan;
         cin.ignore();
-
-        if (cin.fail()) {
-            cin.clear();
-            while (cin.get() != '\n');
-            cout << "\nInput tidak valid. Silakan masukkan angka.\n";
-            cooldown();
-            continue;
-        }
 
         switch (pilihan) {
             case 1: kendaraanMasuk(); break;
